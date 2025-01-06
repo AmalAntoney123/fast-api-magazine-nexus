@@ -10,10 +10,15 @@ import httpx
 
 app = FastAPI()
 
-# Initialize Firebase Admin
-cred = credentials.Certificate("path/to/your/firebase-credentials.json")
-firebase_admin.initialize_app(cred, {
-    'databaseURL': 'your-database-url'
+# Initialize Firebase Admin with direct configuration
+firebase_admin.initialize_app({
+    'apiKey': "AIzaSyBo1l3L7AJR-zoXmLB_H1ehsUSMXZl2-bg",
+    'authDomain': "magazine-nexus.firebaseapp.com",
+    'databaseURL': "https://magazine-nexus-default-rtdb.asia-southeast1.firebasedatabase.app",
+    'projectId': "magazine-nexus",
+    'storageBucket': "magazine-nexus.firebasestorage.app",
+    'messagingSenderId': "1067444901462",
+    'appId': "1:1067444901462:web:c31d1e2dd39adb1a514df7"
 })
 
 # Add Appwrite configuration
