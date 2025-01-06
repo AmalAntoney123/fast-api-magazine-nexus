@@ -7,18 +7,22 @@ from firebase_admin import credentials, db
 import re
 import io
 import httpx
+import json
+import os
 
 app = FastAPI()
 
-# Initialize Firebase Admin with direct configuration
-firebase_admin.initialize_app({
-    'apiKey': "AIzaSyBo1l3L7AJR-zoXmLB_H1ehsUSMXZl2-bg",
-    'authDomain': "magazine-nexus.firebaseapp.com",
-    'databaseURL': "https://magazine-nexus-default-rtdb.asia-southeast1.firebasedatabase.app",
-    'projectId': "magazine-nexus",
-    'storageBucket': "magazine-nexus.firebasestorage.app",
-    'messagingSenderId': "1067444901462",
-    'appId': "1:1067444901462:web:c31d1e2dd39adb1a514df7"
+# Initialize Firebase Admin with service account
+if 'FIREBASE_SERVICE_ACCOUNT' in os.environ:
+    # Production: Use environment variable
+    service_account_info = json.loads(os.environ['FIREBASE_SERVICE_ACCOUNT'])
+    cred = credentials.Certificate(service_account_info)
+else:
+    # Local development: Use file
+    cred = credentials.Certificate('magazine-nexus-firebase-adminsdk-6c4rw-761f6d9b91.json')
+
+firebase_admin.initialize_app(cred, {
+    'databaseURL': "https://magazine-nexus-default-rtdb.asia-southeast1.firebasedatabase.app"
 })
 
 # Add Appwrite configuration
