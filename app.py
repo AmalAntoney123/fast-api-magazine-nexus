@@ -54,6 +54,10 @@ class SearchResponse(BaseModel):
     results: List[SearchResult]
     total_results: int
 
+@app.get("/")
+async def root():
+    return {"message": "Magazine Nexus API is running"}
+
 @app.get("/api/search/{query}", response_model=SearchResponse)
 async def search_magazines(query: str, limit: Optional[int] = 10):
     try:
